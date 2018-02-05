@@ -1,0 +1,7 @@
+write.table - write a data to a txt file.
+write.table(Data, "/filepath/filename.csv", sep=",", row.names =false)
+
+#download a file via url
+FileUrlVariable<-http://someurl....
+DataVariable<- source_data(FileUrlVariable,sep=",",header=True)
+

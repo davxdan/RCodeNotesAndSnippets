@@ -1,0 +1,36 @@
+---
+title: "Vectors, Matrixes, and DataFrames Oh My!"
+author: "Daniel Davieau"
+date: "January 16, 2018"
+output: html_document
+--- keep_md: yes
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+sessionInfo()
+```
+
+##Code
+```{r}
+my_vector<-1:20
+length(my_vector)
+dim(my_vector)<- c(4,5)
+attributes(my_vector)
+my_matrix2<-matrix(data=1:20,nrow = 4,ncol = 5)
+patients<-c("Bill", "Gina", "Kelly", "Sean")
+cbind(patients,my_matrix2)
+my_data <- data.frame(patients,my_matrix2)
+cnames<- c("patient","age","weight", "bp", "rating","test")
+colnames(my_data)<-cnames
+my_data
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(my_data)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

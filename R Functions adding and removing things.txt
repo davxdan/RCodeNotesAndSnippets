@@ -1,0 +1,45 @@
+> class(gpa.section.a)
+[1] "numeric"
+> #show values that are greater than 3.0
+> gpa.section.a > 3.0
+[1]  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+> gpa.section.a >= 3.0
+[1]  TRUE  TRUE FALSE FALSE  TRUE FALSE  TRUE
+> #not = 3.0
+> gpa.section.a != 3.0
+[1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+> gpa.section.a[gpa.section.a > 3.0]
+[1] 3.13 3.55 3.80 3.76
+> #missing Values
+> gpa.section.a <- c(3.13, 3.55, 2.92, NA, 2.73, 3.00, 2.66, 3.76)
+> mean(gpa.section.a)
+[1] NA
+> #Because there is a text value mean doesn't work
+> #Remove the text value so that the mean function will work
+> mean(gpa.section.a,NA.rm=T) 
+[1] NA
+> mean(gpa.section.a,na.rm=T) 
+[1] 3.107143
+> #It seems that"na" is a function above since "NA" didn't work
+> #findout where the na value is
+> is.na(gpa.section.a)
+[1] FALSE FALSE FALSE  TRUE FALSE FALSE FALSE FALSE
+> #anbother way is the "which" function
+> which(is.na(gpa.section.a))
+[1] 4
+> gpa.section.a <- gpa.section.a[-4]
+> gpa.section.a
+[1] 3.13 3.55 2.92 2.73 3.00 2.66 3.76
+> #If use mean > 3.0 the code will cast as 0 and 1 and then return the average of the 1 and 0 so this means that 50% of the valuies are greater than 3.0
+> mean(gpa.section.a > 3.0)
+[1] 0.4285714
+> #More about Missing Values. 
+> 0/0
+[1] NaN
+> #NaN means undefined
+> 1/0
+[1] Inf
+> #Infinite because we divide by 0
+> #NA means a value is actually missiong. IN most other cases when R shows us error if not "NA" then it is a logical error.
+> 
+#To open a more complete description of a dataset in a separate text file, type viewinfo() when you are back at the prompt (>).
