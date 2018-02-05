@@ -1,5 +1,23 @@
 #repmis library
 
+#General
+#type rm(list=ls()) to clear your workspace
+
+#Graphics 
+#Advanced graphics in R: lattice, ggplot2 and ggvis
+#plot(cars) #Note that 'plot' is short for scatterplot
+#plot(x = cars$speed, y = cars$dist)
+plot(x = cars$speed, y = cars$dist, xlab = "Speed", ylab="Stopping Distance")
+#to explore the many other options, look at ?par,?points
+plot(cars, col = 2)
+plot(cars, xlim = c(10,15))
+plot(cars, pch = 2)
+data(mtcars)
+boxplot(formula = mpg ~ cyl,data = mtcars)
+hist(mtcars$mpg)
+
+#this web page(http://www.ling.upenn.edu/~joseff/rstudy/week4.html) provides a useful overview.
+
 ##Character
 my_char<- c("My", "name", "is") #to create a character vector
 c(my_char,"your_name_here")
@@ -16,6 +34,8 @@ my_na<-is.na(my_data)
 
 
 #Data in vectors
+#load data data(cars)
+#some data have help type ?cars
 #vectors come in integers and character strings
 my_data[1:10] #First 10 from a vector (subset)
 y <- x[!is.na(x)] #all non na values from x
