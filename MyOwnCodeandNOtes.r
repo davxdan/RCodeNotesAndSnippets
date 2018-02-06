@@ -2,6 +2,8 @@
 
 #General
 #type rm(list=ls()) to clear your workspace
+write.csv(df, file = "538.csv")
+write.table(df, file = "C:/Users/Daniel Davieau/Documents/GitHub/DoingDataScience/Homework/DDavieauMSDS6306-404UnitHomework/538.csv", col.names = FALSE, sep = ",")
 
 #Graphics 
 #Advanced graphics in R: lattice, ggplot2 and ggvis
@@ -22,6 +24,11 @@ hist(mtcars$mpg)
 my_char<- c("My", "name", "is") #to create a character vector
 c(my_char,"your_name_here")
 paste(my_char, collapse = " ") #paste() function to concat together the elements of the my_char character vector with single spaces
+
+#Reg Expressions
+test<- readLines("yob2016.txt")
+grep()
+grep("[Aa]ria",test) #this wasnt working bc the file wasn't using ""
 
 #Numbers
 num_vect<-c(.5,55,-10,6)#create a numeric vector
