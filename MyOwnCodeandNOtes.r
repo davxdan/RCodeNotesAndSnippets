@@ -1,20 +1,16 @@
-#
-
 #General
 #type rm(list=ls()) to clear your workspace
 
 #file actions
-test<- readLines("yob2016.txt")
+test<- readLines("case0102.csv")
 write.csv(df, file = "538.csv")
 write.table(df, file = "C:/Users/Daniel Davieau/Documents/GitHub/DoingDataScience/Homework/DDavieauMSDS6306-404UnitHomework/538.csv", col.names = FALSE, sep = ",")
-filename<-
-data<- read.table ("case0102.csv",sep=",",header=TRUE)
-head(data)
+test<- read.table ("case0102.csv",sep=",",header=TRUE)
+head(test)
 library(repmis)
 site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
 download.file(site,destfile ="./baseballsalaries.txt")
-#Graphics 
-#Advanced graphics in R: lattice, ggplot2 and ggvis
+#Graphics(for advanced graphics in R see lattice, ggplot2 and ggvis
 #plot(cars) #Note that 'plot' is short for scatterplot
 #plot(x = cars$speed, y = cars$dist)
 plot(x = cars$speed, y = cars$dist, xlab = "Speed", ylab="Stopping Distance")
@@ -34,10 +30,14 @@ c(my_char,"your_name_here")
 paste(my_char, collapse = " ") #paste() function to concat together the elements of the my_char character vector with single spaces
 
 #Reg Expressions
-
-grep()
+grep("Female",test)
 grep("[Aa]ria",test) #this wasnt working bc the file wasn't using ""
-
+grep("^I",test) #look for things beginning with "I"
+grep("I?",test) #look for things ending with "I"
+grep("[0-9]",test) #find numbers
+grep("9.11",test) #"." is wildcard for between
+grep("a|b",test) #find a or b
+test[c(16:18)]
 #Numbers
 num_vect<-c(.5,55,-10,6)#create a numeric vector
 num_vect >=6  #show me anything greater than 6 True/false
@@ -48,7 +48,15 @@ my_na<-is.na(my_data)
 #use == for equality !=` for inequality
 
 #Data Manipulation
+#melting or "stacking" data means using column headers as values (like kvp). "RoW", "Column", "Value" 
+#casting is opposite of melting
 #If the format is consistent, just combine the data into a single table using the plyr package
+#checkout dplyr and plyr for data trnsforms
+#cbind (for columns) rbind(for rows)
+
+
+
+
 #load data data(cars)
 #some data have help type ?cars
 #vectors come in integers and character strings
