@@ -1,10 +1,18 @@
-#repmis library
+#
 
 #General
 #type rm(list=ls()) to clear your workspace
+
+#file actions
+test<- readLines("yob2016.txt")
 write.csv(df, file = "538.csv")
 write.table(df, file = "C:/Users/Daniel Davieau/Documents/GitHub/DoingDataScience/Homework/DDavieauMSDS6306-404UnitHomework/538.csv", col.names = FALSE, sep = ",")
-
+filename<-
+data<- read.table ("case0102.csv",sep=",",header=TRUE)
+head(data)
+library(repmis)
+site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
+download.file(site,destfile ="./baseballsalaries.txt")
 #Graphics 
 #Advanced graphics in R: lattice, ggplot2 and ggvis
 #plot(cars) #Note that 'plot' is short for scatterplot
@@ -26,7 +34,7 @@ c(my_char,"your_name_here")
 paste(my_char, collapse = " ") #paste() function to concat together the elements of the my_char character vector with single spaces
 
 #Reg Expressions
-test<- readLines("yob2016.txt")
+
 grep()
 grep("[Aa]ria",test) #this wasnt working bc the file wasn't using ""
 
@@ -39,8 +47,8 @@ my_data <- sample(c(y, z), 100)
 my_na<-is.na(my_data)
 #use == for equality !=` for inequality
 
-
-#Data in vectors
+#Data Manipulation
+#If the format is consistent, just combine the data into a single table using the plyr package
 #load data data(cars)
 #some data have help type ?cars
 #vectors come in integers and character strings
