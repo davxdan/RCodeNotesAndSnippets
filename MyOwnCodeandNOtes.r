@@ -50,21 +50,24 @@ WDIsearch("fertilizer consumption")
 FertConsumpData<-WDI(indicator="AG.CON.FERT.ZS")
 #install.packages("tidyverse")
 head(FertConsumpData)
+class(FertConsumpData)
 library(tidyverse)
 SpreadFert<-spread(FertConsumpData, year, AG.CON.FERT.ZS) #convert long to wide. Transposed year
 head(SpreadFert)#transposed
 SpreadFert<-arrange(SpreadFert, country) #arranged by country alphabetically
-GatherFert<-gather(SpreadFert,Year,Fert,3:9)#Gather columns 3-9.Year now a factor rather than numeric.
-head(GatherFert)
-GatherFert<-rename(GatherFert,year=Year,FertilizerConsumption=Fert) #Rename columns
-GatherFert<-GatherFert[order(GatherFert$country,GatherFert$year),] #Sort data
+GatheredFert<-gather(SpreadFert,Year,Fert,3:9)#Gather columns 3-9.Year now a factor rather than numeric.
+head(GatheredFert)
+GatheredFert<-rename(GatheredFert,year=Year,FertilizerConsumption=Fert) #Rename columns
+GatheredFert<-GatheredFert[order(GatheredFert$country,GatheredFert$year),] #Sort data
+FertOutliers<- subset(x = GatheredFert, FertilizerConsumption > 1000) #get only outliers
+GatheredFertSub <- subset(x = GatheredFert, FertilizerConsumption <= 1000)
+GatheredFertSub <- subset(x = GatheredFertSub, country != "Arab World")#subset the subset excluding bad records
+GatheredFertSub<- subset(x = GatheredFertSub, !is.na(FertilizerConsumption)) #y <- x[!is.na(x)] #all non na values from x
 
-
-#Graphics(for advanced graphics in R see lattice, ggplot2 and ggvis
+#Graphics (for more advanced graphics in R see lattice, ggplot2 and ggvis)
 #http://www.ling.upenn.edu/~joseff/rstudy/week4.html
 library(ggplot2)
-ggplot(data = GatherFert,aes(FertilizerConsumption))#+geom_density()
-
+ggplot(data = GatherFert,aes(FertilizerConsumption))+geom_density()
 plot(cars) #Note that 'plot' is short for scatterplot
 plot(x = cars$speed, y = cars$dist)
 plot(x = cars$speed, y = cars$dist, xlab = "Speed", ylab="Stopping Distance")
@@ -75,11 +78,10 @@ plot(cars, pch = 2)
 data(mtcars)
 boxplot(formula = mpg ~ cyl,data = mtcars)
 hist(mtcars$mpg)
-#load data data(cars)
-#some data have help type ?cars
+data(cars)#some data have help type ?cars
 #vectors come in integers and character strings
 my_data[1:10] #First 10 from a vector (subset)
-y <- x[!is.na(x)] #all non na values from x
+
 #NA is not a value, but rather a placeholder for an unknown quantity
 #the first element of a vector is considered element 1
 x[c(3, 5, 7)] #subset the 3rd, 5th, and 7th elements of x
