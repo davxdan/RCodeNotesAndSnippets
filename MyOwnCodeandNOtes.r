@@ -9,9 +9,21 @@ write.table(test, file = "testWriteTable.csv", col.names = FALSE, sep = ",")
 test<- read.table ("case0102.csv",sep=",",header=TRUE)
 head(test)
 #install.packages('repmis')
+#install.packages("countrycode")
 library(repmis)
 site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
 download.file(site,destfile ="./baseballsalaries.txt")
+library(RCurl)
+library(countrycode)
+fileURL<- "http://bit.ly/14a55qq"
+FinRegulatorData<- source_data(fileURL)
+
+
+UrlAddress<- "https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv"
+DataURL<- getURL(UrlAddress)
+DispropData<-read.table(textConnection(DataURL),sep=",",header=TRUE)
+FinRegulatorData$iso2c<-countrycode(FinRegulatorData$country,origin="country.name",destination="iso2c")
+
 
 
 ##Character
