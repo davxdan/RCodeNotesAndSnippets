@@ -1,18 +1,23 @@
 #General
-#type rm(list=ls()) to clear your workspace
+rm(list=ls()) #to clear workspace
+
 
 #file actions
 test<- readLines("case0102.csv")
-write.csv(df, file = "538.csv")
-write.table(df, file = "C:/Users/Daniel Davieau/Documents/GitHub/DoingDataScience/Homework/DDavieauMSDS6306-404UnitHomework/538.csv", col.names = FALSE, sep = ",")
+write.csv(test, file = "testWriteCSV.csv")
+write.table(test, file = "testWriteTable.csv", col.names = FALSE, sep = ",")
 test<- read.table ("case0102.csv",sep=",",header=TRUE)
 head(test)
+#install.packages('repmis')
 library(repmis)
 site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
 download.file(site,destfile ="./baseballsalaries.txt")
+
+
 #Graphics(for advanced graphics in R see lattice, ggplot2 and ggvis
-#plot(cars) #Note that 'plot' is short for scatterplot
-#plot(x = cars$speed, y = cars$dist)
+#http://www.ling.upenn.edu/~joseff/rstudy/week4.html
+plot(cars) #Note that 'plot' is short for scatterplot
+plot(x = cars$speed, y = cars$dist)
 plot(x = cars$speed, y = cars$dist, xlab = "Speed", ylab="Stopping Distance")
 #to explore the many other options, look at ?par,?points
 plot(cars, col = 2)
@@ -22,12 +27,14 @@ data(mtcars)
 boxplot(formula = mpg ~ cyl,data = mtcars)
 hist(mtcars$mpg)
 
-#this web page(http://www.ling.upenn.edu/~joseff/rstudy/week4.html) provides a useful overview.
+
 
 ##Character
 my_char<- c("My", "name", "is") #to create a character vector
 c(my_char,"your_name_here")
 paste(my_char, collapse = " ") #paste() function to concat together the elements of the my_char character vector with single spaces
+
+
 
 #Reg Expressions
 grep("Female",test)
@@ -38,6 +45,8 @@ grep("[0-9]",test) #find numbers
 grep("9.11",test) #"." is wildcard for between
 grep("a|b",test) #find a or b
 test[c(16:18)]
+
+
 #Numbers
 num_vect<-c(.5,55,-10,6)#create a numeric vector
 num_vect >=6  #show me anything greater than 6 True/false
@@ -45,14 +54,22 @@ paste(1:3, c("X", "Y", "Z"), sep = "") #[1] "1X" "2Y" "3Z"s Note that paste conv
 x<-c(44,NA,5,NA) #NA values x*3 [1] 132  NA  15  NA
 my_data <- sample(c(y, z), 100)
 my_na<-is.na(my_data)
-#use == for equality !=` for inequality
+# == for equality !=` for inequality
 
 #Data Manipulation
-#melting or "stacking" data means using column headers as values (like kvp). "RoW", "Column", "Value" 
-#casting is opposite of melting
-#If the format is consistent, just combine the data into a single table using the plyr package
-#checkout dplyr and plyr for data trnsforms
+#Melting or "stacking" data means using column headers as values (like key value pairs). "RoW", "Column", "Value". #Casting is opposite of melting.
+#dplyr and plyr for data trnsforms
 #cbind (for columns) rbind(for rows)
+#install.packages('WDI') #World Development Indicators from World Bank
+library(WDI)
+WDIsearch("fertilizer consumption")
+FertConsumpData<-WDI(indicator="AG.CON.FERT.ZS")
+#install.packages("tidyverse")
+head(FertConsumpData)
+library(tidyverse)
+spreadfert<-spread(FertConsumpData, year, AG.CON.FERT.ZS) #convert long to wide
+head(spreadfert)#transposed
+  
 
 
 
