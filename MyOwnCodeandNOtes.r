@@ -14,26 +14,10 @@ site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
 download.file(site,destfile ="./baseballsalaries.txt")
 
 
-#Graphics(for advanced graphics in R see lattice, ggplot2 and ggvis
-#http://www.ling.upenn.edu/~joseff/rstudy/week4.html
-plot(cars) #Note that 'plot' is short for scatterplot
-plot(x = cars$speed, y = cars$dist)
-plot(x = cars$speed, y = cars$dist, xlab = "Speed", ylab="Stopping Distance")
-#to explore the many other options, look at ?par,?points
-plot(cars, col = 2)
-plot(cars, xlim = c(10,15))
-plot(cars, pch = 2)
-data(mtcars)
-boxplot(formula = mpg ~ cyl,data = mtcars)
-hist(mtcars$mpg)
-
-
-
 ##Character
 my_char<- c("My", "name", "is") #to create a character vector
 c(my_char,"your_name_here")
 paste(my_char, collapse = " ") #paste() function to concat together the elements of the my_char character vector with single spaces
-
 
 
 #Reg Expressions
@@ -67,13 +51,30 @@ FertConsumpData<-WDI(indicator="AG.CON.FERT.ZS")
 #install.packages("tidyverse")
 head(FertConsumpData)
 library(tidyverse)
-spreadfert<-spread(FertConsumpData, year, AG.CON.FERT.ZS) #convert long to wide
-head(spreadfert)#transposed
-  
+SpreadFert<-spread(FertConsumpData, year, AG.CON.FERT.ZS) #convert long to wide. Transposed year
+head(SpreadFert)#transposed
+SpreadFert<-arrange(SpreadFert, country) #arranged by country alphabetically
+GatherFert<-gather(SpreadFert,Year,Fert,3:9)#Gather columns 3-9.Year now a factor rather than numeric.
+head(GatherFert)
+GatherFert<-rename(GatherFert,year=Year,FertilizerConsumption=Fert) #Rename columns
+GatherFert<-GatherFert[order(GatherFert$country,GatherFert$year),] #Sort data
 
 
+#Graphics(for advanced graphics in R see lattice, ggplot2 and ggvis
+#http://www.ling.upenn.edu/~joseff/rstudy/week4.html
+library(ggplot2)
+ggplot(data = GatherFert,aes(FertilizerConsumption))#+geom_density()
 
-
+plot(cars) #Note that 'plot' is short for scatterplot
+plot(x = cars$speed, y = cars$dist)
+plot(x = cars$speed, y = cars$dist, xlab = "Speed", ylab="Stopping Distance")
+#to explore the many other options, look at ?par,?points
+plot(cars, col = 2)
+plot(cars, xlim = c(10,15))
+plot(cars, pch = 2)
+data(mtcars)
+boxplot(formula = mpg ~ cyl,data = mtcars)
+hist(mtcars$mpg)
 #load data data(cars)
 #some data have help type ?cars
 #vectors come in integers and character strings
