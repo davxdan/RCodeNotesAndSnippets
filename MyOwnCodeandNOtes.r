@@ -46,17 +46,17 @@ my_na<-is.na(my_data)
 #cbind (for columns) rbind(for rows)
 #install.packages('WDI') #World Development Indicators from World Bank
 library(WDI)
-WDIsearch("fertilizer consumption")
+#WDIsearch("fertilizer consumption")
 FertConsumpData<-WDI(indicator="AG.CON.FERT.ZS")
 #install.packages("tidyverse")
-head(FertConsumpData)
-class(FertConsumpData)
+#head(FertConsumpData)
+#class(FertConsumpData)
 library(tidyverse)
 SpreadFert<-spread(FertConsumpData, year, AG.CON.FERT.ZS) #convert long to wide. Transposed year
-head(SpreadFert)#transposed
+#head(SpreadFert)#transposed
 SpreadFert<-arrange(SpreadFert, country) #arranged by country alphabetically
 GatheredFert<-gather(SpreadFert,Year,Fert,3:9)#Gather columns 3-9.Year now a factor rather than numeric.
-head(GatheredFert)
+#head(GatheredFert)
 GatheredFert<-rename(GatheredFert,year=Year,FertilizerConsumption=Fert) #Rename columns
 GatheredFert<-GatheredFert[order(GatheredFert$country,GatheredFert$year),] #Sort data
 FertOutliers<- subset(x = GatheredFert, FertilizerConsumption > 1000) #get only outliers
@@ -65,17 +65,23 @@ GatheredFertSub <- subset(x = GatheredFertSub, country != "Arab World")#subset t
 GatheredFertSub<- subset(x = GatheredFertSub, !is.na(FertilizerConsumption)) #y <- x[!is.na(x)] #all non na values from x
 
 #Updating Values
-unique(GatheredFertSub$country)
+#unique(GatheredFertSub$country)
 GatheredFertSub$country[GatheredFertSub$country == "Korea, Rep."]<-"South Korea" #For numbers do same except no quotes ""
 GatheredFertSub$logFertConsumption <- log(GatheredFertSub$FertilizerConsumption)
-summary(GatheredFertSub$logFertConsumption) #because some had zero we see infinite values in summary.
+#summary(GatheredFertSub$logFertConsumption) #because some had zero we see infinite values in summary.
 GatheredFertSub$FertilizerConsumption[GatheredFertSub$FertilizerConsumption == 0]<-.001 #Replace 0's with small value to resolve infinite summary stats 
 GatheredFertSub$logFertConsumption <- log(GatheredFertSub$FertilizerConsumption)
 attach(GatheredFertSub) #attach to R so we can use variables without the $
 #Categorize data by adding a column populated based on criteria
 GatheredFertSub$ConsGroup[FertilizerConsumption <=18]<-1
-GatheredFertSub$ConsGroup[FertilizerConsumption >18 && FertilizerConsumption <=81]<-2
-
+GatheredFertSub$ConsGroup[FertilizerConsumption >18 & FertilizerConsumption <=81]<-2
+GatheredFertSub$ConsGroup[FertilizerConsumption >81 & FertilizerConsumption <=158]<-3
+GatheredFertSub$ConsGroup[FertilizerConsumption >158]<-4
+#unique(GatheredFertSub$ConsGroup)
+FClabels<-c("low", "medium low","medium high", "high") #create labels
+GatheredFertSub$ConsGroup<-factor(GatheredFertSub$ConsGroup, labels = FClabels) #change or "coerce" datatype to factor and add labels. Other way is to use "as."
+#summary(GatheredFertSub$ConsGroup)
+#look into using the cut() function
 
 
 
