@@ -64,6 +64,21 @@ GatheredFertSub <- subset(x = GatheredFert, FertilizerConsumption <= 1000)
 GatheredFertSub <- subset(x = GatheredFertSub, country != "Arab World")#subset the subset excluding bad records
 GatheredFertSub<- subset(x = GatheredFertSub, !is.na(FertilizerConsumption)) #y <- x[!is.na(x)] #all non na values from x
 
+#Updating Values
+unique(GatheredFertSub$country)
+GatheredFertSub$country[GatheredFertSub$country == "Korea, Rep."]<-"South Korea" #For numbers do same except no quotes ""
+GatheredFertSub$logFertConsumption <- log(GatheredFertSub$FertilizerConsumption)
+summary(GatheredFertSub$logFertConsumption) #because some had zero we see infinite values in summary.
+GatheredFertSub$FertilizerConsumption[GatheredFertSub$FertilizerConsumption == 0]<-.001 #Replace 0's with small value to resolve infinite summary stats 
+GatheredFertSub$logFertConsumption <- log(GatheredFertSub$FertilizerConsumption)
+attach(GatheredFertSub) #attach to R so we can use variables without the $
+#Categorize data by adding a column populated based on criteria
+GatheredFertSub$ConsGroup[FertilizerConsumption <=18]<-1
+GatheredFertSub$ConsGroup[FertilizerConsumption >18 && FertilizerConsumption <=81]<-2
+
+
+
+
 #Graphics (for more advanced graphics in R see lattice, ggplot2 and ggvis)
 #http://www.ling.upenn.edu/~joseff/rstudy/week4.html
 library(ggplot2)
