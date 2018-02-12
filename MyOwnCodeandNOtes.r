@@ -15,10 +15,8 @@ site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
 download.file(site,destfile ="./baseballsalaries.txt")
 library(RCurl)
 library(countrycode)
-fileURL<- "http://bit.ly/14a55qq"
-FinRegulatorData<- source_data(fileURL)
-
-
+fileURL<- "http://bit.ly/14aS5qq"
+FinRegulatorData<- source_data(fileURL,sep=",",header = TRUE)
 UrlAddress<- "https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv"
 DataURL<- getURL(UrlAddress)
 DispropData<-read.table(textConnection(DataURL),sep=",",header=TRUE)
@@ -95,6 +93,10 @@ GatheredFertSub$ConsGroup<-factor(GatheredFertSub$ConsGroup, labels = FClabels) 
 #summary(GatheredFertSub$ConsGroup)
 #look into using the cut() function
 
+#problems with this because FinRegulatorData not found at URL
+MergeData1 <- merge(x= FinRegulatorData, y=DispropData, by = "iso2c", all=TRUE) #Join data
+MergeData2 <- merge(x= FinRegulatorData, y=DispropData, union("x","y"), all=TRUE)
+dataduplicates<-MergeData2[duplicated(MergeData2[,1:2]),]
 
 
 #Graphics (for more advanced graphics in R see lattice, ggplot2 and ggvis)
