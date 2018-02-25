@@ -158,6 +158,9 @@ lapply(unique_vals, function(elem) elem[2]) # will return a list containing the 
 #summary() 
 #str()
 #Stats
+sample = c(1.7, 1.6, 1.5, 2.0, 2.3, 1.6, 1.6, 1.8, 1.5, 1.7, 1.2, 1.4, 1.6, 1.6, 1.6)
+t.test(x=sample, mu = 1.8, conf.int = "TRUE", alternative = "two.sided" )
+
 rnorm(1000) #Create random normal dist
 z<- rep(NA,1000)
 #df_titanicSex<- data.frame(df_titanic[,c("Sex")])
