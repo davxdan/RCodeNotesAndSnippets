@@ -94,6 +94,7 @@ GatheredFertSub$ConsGroup<-factor(GatheredFertSub$ConsGroup, labels = FClabels) 
 #look into using the cut() function
 
 #problems with this because FinRegulatorData not found at URL
+#Merge Parameter all=FALSE (only matching rows are returned) 
 MergeData1 <- merge(x= FinRegulatorData, y=DispropData, by = "iso2c", all=TRUE) #Join data
 MergeData2 <- merge(x= FinRegulatorData, y=DispropData, union("x","y"), all=TRUE)
 dataduplicates<-MergeData2[duplicated(MergeData2[,1:2]),]
