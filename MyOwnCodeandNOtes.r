@@ -17,6 +17,11 @@ download.file(site,destfile ="./baseballsalaries.txt")
 library(RCurl)
 library(countrycode)
 
+#Makefiles
+#disable smartquotes, smartdashes
+setwd("~/GitHub/RCodeNotesAndSnippets")
+source("DansFirstMakeFile.txt")
+
 #Download and open a zip file
 library(RCurl)
 fileURL<- "http://bit.ly/ijXJgDh"
