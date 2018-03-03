@@ -3,6 +3,7 @@ rm(list=ls()) #to clear workspace
 
 
 #file actions
+library(RCurl) #for https site
 test<- readLines("case0102.csv")
 write.csv(test, file = "testWriteCSV.csv")
 write.table(test, file = "testWriteTable.csv", col.names = FALSE, sep = ",")
@@ -15,6 +16,21 @@ site<- "http://www.users.miamioh.edu/hughesmr/sta333/baseballsalaries.txt"
 download.file(site,destfile ="./baseballsalaries.txt")
 library(RCurl)
 library(countrycode)
+
+#Makefiles
+#disable smartquotes, smartdashes
+setwd("~/GitHub/RCodeNotesAndSnippets")
+source("DansFirstMakeFile.txt")
+
+#Download and open a zip file
+library(RCurl)
+fileURL<- "http://bit.ly/ijXJgDh"
+temp<- tempfile()
+download.file(fileURL,temp)
+UDSData <- read.csv(gzfile(temp, "uds_summary.csv"))
+
+
+
 fileURL<- "http://bit.ly/14aS5qq"
 FinRegulatorData<- source_data(fileURL,sep=",",header = TRUE)
 UrlAddress<- "https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv"
@@ -158,6 +174,9 @@ lapply(unique_vals, function(elem) elem[2]) # will return a list containing the 
 #summary() 
 #str()
 #Stats
+sample = c(1.7, 1.6, 1.5, 2.0, 2.3, 1.6, 1.6, 1.8, 1.5, 1.7, 1.2, 1.4, 1.6, 1.6, 1.6)
+t.test(x=sample, mu = 1.8, conf.int = "TRUE", alternative = "two.sided" )
+
 rnorm(1000) #Create random normal dist
 z<- rep(NA,1000)
 #df_titanicSex<- data.frame(df_titanic[,c("Sex")])
