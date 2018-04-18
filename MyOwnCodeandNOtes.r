@@ -29,16 +29,12 @@ temp<- tempfile()
 download.file(fileURL,temp)
 UDSData <- read.csv(gzfile(temp, "uds_summary.csv"))
 
-
-
 fileURL<- "http://bit.ly/14aS5qq"
 FinRegulatorData<- source_data(fileURL,sep=",",header = TRUE)
 UrlAddress<- "https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv"
 DataURL<- getURL(UrlAddress)
 DispropData<-read.table(textConnection(DataURL),sep=",",header=TRUE)
 FinRegulatorData$iso2c<-countrycode(FinRegulatorData$country,origin="country.name",destination="iso2c")
-
-
 
 ##Character
 my_char<- c("My", "name", "is") #to create a character vector
@@ -115,7 +111,6 @@ MergeData1 <- merge(x= FinRegulatorData, y=DispropData, by = "iso2c", all=TRUE) 
 MergeData2 <- merge(x= FinRegulatorData, y=DispropData, union("x","y"), all=TRUE)
 dataduplicates<-MergeData2[duplicated(MergeData2[,1:2]),]
 
-
 #Graphics (for more advanced graphics in R see lattice, ggplot2 and ggvis)
 #http://www.ling.upenn.edu/~joseff/rstudy/week4.html
 library(ggplot2)
@@ -171,7 +166,6 @@ unique_vals<-lapply(flags,unique)
 sapply(unique_vals,length)
 lapply(unique_vals, function(elem) elem[2]) # will return a list containing the second item from each element of the  unique_vals list.
 
-
 #summary() 
 #str()
 #Stats
@@ -193,26 +187,39 @@ flips<-sample(c(0,1),100,replace=TRUE,prob = c(0.3, 0.7))
 #modulus operator %% to find the remainder
 #a list maycontain multiple data types
 
+#functions
 my_mean <- function(my_vector) {
   x<-sum(my_vector)
   y<-length(my_vector)
   x/y
 }
-# my_mean(c(4, 5, 10))
+my_mean(c(4, 5, 10))
 #optional default values... 2 for example below
-#remainder <- function(num, divisor=2) {
-#num %% divisor
-#}
+remainder <- function(num, divisor=2) {num %% divisor}
+evaluate <- function(func,dat){  func(dat)}
 
-#evaluate <- function(func,dat){
-#  func(dat)
-#}
 # Pass a function into a function evaluate(function(x){x+1}, 6)
-#d1 <- Sys.Date()
-#unclass(d1)
-#d2<-as.Date("1969-01-01")
-#t1<-Sys.time()mean
-# use strptime(t3, "%B %d, %Y %H:%M") to help R convert our date/time object to a format that it understands
-#Sys.time() > t1
-#Sys.time() - t1
-#difftime(Sys.time(), t1, units = 'days')
+d1 <- Sys.Date()
+unclass(d1)
+d2<-as.Date("1969-01-01")
+t1<-Sys.time()mean
+strptime(t3, "%B %d, %Y %H:%M") #to help R convert our date/time object to a format that it understands
+Sys.time() > t1
+Sys.time() - t1
+difftime(Sys.time(), t1, units = 'days')
+
+#Scraping Data
+#http://www.json.org/
+library(RJSONIO)
+library(jsonlite)
+swdf = as.data.frame(rbind(c("Anakin", "male", "Tatooine", "41.9BBY", "yes"), c("Amidala", "female", "Naboo", "46.9BBY", "no")))
+names(swdf)=c("Name", "Gender","Homeworld","Born","Jedi")
+sw_json<- toJSON(swdf)
+class(sw_json)
+sw_R <- fromJSON(sw_json)
+
+#json from a website
+json_file <- "https://jsonplaceholder.typicode.com/posts"
+data <- fromJSON(json_file)
+class(data)
+#stopwords
