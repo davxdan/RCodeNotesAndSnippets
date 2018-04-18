@@ -41,7 +41,6 @@ my_char<- c("My", "name", "is") #to create a character vector
 c(my_char,"your_name_here")
 paste(my_char, collapse = " ") #paste() function to concat together the elements of the my_char character vector with single spaces
 
-
 #Reg Expressions
 grep("Female",test)
 grep("[Aa]ria",test) #this wasnt working bc the file wasn't using ""
